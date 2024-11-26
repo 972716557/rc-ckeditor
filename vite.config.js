@@ -11,8 +11,11 @@ export default defineConfig({
     emptyOutDir: true,
     rollupOptions: {
       input: "src/index.jsx",
-      assetsDir: "",
-      outDir: "lib",
+      output: {
+        entryFileNames: "[name].js",
+        chunkFileNames: "[name].js",
+        assetFileNames: "[name][extname]",
+      },
       plugins: [
         babel({
           exclude: "node_modules/**",

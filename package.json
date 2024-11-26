@@ -1,7 +1,7 @@
 {
   "name": "rc-ckeditor",
   "version": "1.0.0",
-  "main": "lib/assets/index.js",
+  "main": "lib/index.js",
   "type": "module",
   "scripts": {
     "dev": "vite",
