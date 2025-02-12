@@ -1,57 +1,57 @@
-import { useEffect, useState } from "react";
-
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import getSelectedContent from "@ckeditor/ckeditor5-engine/src/model/utils/getselectedcontent";
-import { ClassicEditor } from "@ckeditor/ckeditor5-editor-classic";
-import { Alignment } from "@ckeditor/ckeditor5-alignment";
-import translations from "ckeditor5/translations/zh-cn.js";
+import React, { useEffect, useState } from "react";
 import {
+  BlockQuote,
   Bold,
-  Code,
+  Heading,
+  Image,
+  ImageCaption,
+  ImageStyle,
+  ImageToolbar,
+  Indent,
   Italic,
+  Link,
+  List,
+  MediaEmbed,
+  Paragraph,
+  Alignment,
+  AutoImage,
+  AutoLink,
+  Code,
+  CodeBlock,
+  Essentials,
+  FindAndReplace,
+  Font,
+  Highlight,
+  HorizontalLine,
+  HtmlEmbed,
+  ImageInsert,
+  ImageResize,
+  IndentBlock,
+  GeneralHtmlSupport,
+  LinkImage,
+  ListProperties,
+  TodoList,
+  PageBreak,
+  PasteFromOffice,
+  PictureEditing,
+  RemoveFormat,
+  ShowBlocks,
+  SourceEditing,
+  SpecialCharacters,
+  SpecialCharactersEssentials,
+  Style,
   Strikethrough,
   Subscript,
   Superscript,
+  TextTransformation,
   Underline,
-} from "@ckeditor/ckeditor5-basic-styles";
-import { BlockQuote } from "@ckeditor/ckeditor5-block-quote";
-import { CodeBlock } from "@ckeditor/ckeditor5-code-block";
-import { Essentials } from "@ckeditor/ckeditor5-essentials";
-import { FindAndReplace } from "@ckeditor/ckeditor5-find-and-replace";
-import { Font } from "@ckeditor/ckeditor5-font";
-import { Heading } from "@ckeditor/ckeditor5-heading";
-import { Highlight } from "@ckeditor/ckeditor5-highlight";
-import { HorizontalLine } from "@ckeditor/ckeditor5-horizontal-line";
-import { HtmlEmbed } from "@ckeditor/ckeditor5-html-embed";
-import { GeneralHtmlSupport } from "@ckeditor/ckeditor5-html-support";
+  WordCount,
+  ClassicEditor,
+} from "ckeditor5";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import getSelectedContent from "@ckeditor/ckeditor5-engine/src/model/utils/getselectedcontent";
+import translations from "ckeditor5/translations/zh-cn.js";
 
-import {
-  AutoImage,
-  Image,
-  ImageCaption,
-  ImageInsert,
-  ImageResize,
-  ImageStyle,
-  ImageToolbar,
-  PictureEditing,
-} from "@ckeditor/ckeditor5-image";
-import { Indent, IndentBlock } from "@ckeditor/ckeditor5-indent";
-import { AutoLink, Link, LinkImage } from "@ckeditor/ckeditor5-link";
-import { List, ListProperties, TodoList } from "@ckeditor/ckeditor5-list";
-import { MediaEmbed } from "@ckeditor/ckeditor5-media-embed";
-import { PageBreak } from "@ckeditor/ckeditor5-page-break";
-import { Paragraph } from "@ckeditor/ckeditor5-paragraph";
-import { PasteFromOffice } from "@ckeditor/ckeditor5-paste-from-office";
-import { RemoveFormat } from "@ckeditor/ckeditor5-remove-format";
-import { ShowBlocks } from "@ckeditor/ckeditor5-show-blocks";
-import { SourceEditing } from "@ckeditor/ckeditor5-source-editing";
-import {
-  SpecialCharacters,
-  SpecialCharactersEssentials,
-} from "@ckeditor/ckeditor5-special-characters";
-import { Style } from "@ckeditor/ckeditor5-style";
-import { TextTransformation } from "@ckeditor/ckeditor5-typing";
-import { WordCount } from "@ckeditor/ckeditor5-word-count";
 import ImageButton from "./image";
 import VideoUpload from "./video";
 import CustomVideoPlugin from "./video/video-plugin/index";
@@ -126,8 +126,8 @@ const editorConfig = {
     TextTransformation,
     Underline,
     WordCount,
-    ImageUploadPlugin,
-    CustomVideoPlugin,
+    // ImageUploadPlugin,
+    // CustomVideoPlugin,
   ],
   initialData: "",
   image: {
