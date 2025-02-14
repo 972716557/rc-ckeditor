@@ -127,7 +127,7 @@ const editorConfig = {
     Underline,
     WordCount,
     // ImageUploadPlugin,
-    // CustomVideoPlugin,
+    CustomVideoPlugin,
   ],
   initialData: "",
   image: {
@@ -315,7 +315,8 @@ export default function App() {
       <LinkButton editor={editor} text={selectedText} />
       <Color editor={editor} color={color} />
       {/* <ImageButton editor={editor} />
-      <VideoUpload editor={editor} /> */}
+       */}
+      <VideoUpload editor={editor} />
       <CKEditor
         editor={ClassicEditor}
         onReady={(editor) => {

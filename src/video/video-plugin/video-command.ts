@@ -1,6 +1,12 @@
-import type { DocumentSelection, Element, Model, Schema, Selection } from 'ckeditor5/src/engine.js';
-import { Command } from 'ckeditor5/src/core.js';
-import { findOptimalInsertionRange } from 'ckeditor5/src/widget.js';
+import type {
+  DocumentSelection,
+  Element,
+  Model,
+  Schema,
+  Selection,
+} from "ckeditor5";
+import { Command } from "ckeditor5/src/core.js";
+import { findOptimalInsertionRange } from "ckeditor5/src/widget.js";
 
 export default class ESpaceVideoCommand extends Command {
   public refresh(): void {
@@ -14,9 +20,11 @@ export default class ESpaceVideoCommand extends Command {
   public execute({ fileID }: { fileID: string }): void {
     const model = this.editor.model;
     model.change((writer) => {
-      const horizontalElement = writer.createElement('espaceVideo');
-      writer.setAttribute('fileID', fileID, horizontalElement);
-      model.insertObject(horizontalElement, null, null, { setSelection: 'after' });
+      const horizontalElement = writer.createElement("espaceVideo");
+      writer.setAttribute("fileID", fileID, horizontalElement);
+      model.insertObject(horizontalElement, null, null, {
+        setSelection: "after",
+      });
     });
   }
 }
@@ -24,21 +32,21 @@ export default class ESpaceVideoCommand extends Command {
 function isESpaceVideoAllowedInParent(
   selection: Selection | DocumentSelection,
   schema: Schema,
-  model: Model,
+  model: Model
 ): boolean {
   const parent = getInsertESpaceVideoParent(selection, model);
 
-  return schema.checkChild(parent, 'espaceVideo');
+  return schema.checkChild(parent, "espaceVideo");
 }
 
 function getInsertESpaceVideoParent(
   selection: Selection | DocumentSelection,
-  model: Model,
+  model: Model
 ): Element {
   const insertionRange = findOptimalInsertionRange(selection, model);
   const parent = insertionRange.start.parent;
 
-  if (parent.isEmpty && !parent.is('element', '$root')) {
+  if (parent.isEmpty && !parent.is("element", "$root")) {
     return parent.parent! as Element;
   }
 
