@@ -1,4 +1,5 @@
 // CustomPlugin.js
+import React from "react";
 import {
   Plugin,
   toWidget,
