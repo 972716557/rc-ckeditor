@@ -1,4 +1,4 @@
-// CustomCardPlugin.js
+// CustomPlugin.js
 import {
   Plugin,
   toWidget,
@@ -6,13 +6,12 @@ import {
   ButtonView,
   viewToModelPositionOutsideModelElement,
 } from "ckeditor5";
-
 import ReactDOM from "react-dom/client";
-import CustomCardComponent from "./video";
+import CustomReactComponent from "./CustomReactComponent";
 
 // 自定义命令类，继承自 Command
-class InsertCustomCardCommand extends Command {
-  execute({ title }) {
+class InsertCustomComponentCommand extends Command {
+  execute({ message }) {
     const editor = this.editor;
     const view = editor.editing.view;
     const viewDocument = view.document;
@@ -21,7 +20,7 @@ class InsertCustomCardCommand extends Command {
     // 使用 downcastWriter 创建视图元素
     view.change((writer) => {
       const div = writer.createContainerElement("div", {
-        class: "custom-card-component",
+        class: "custom-react-component",
       });
       const widget = toWidget(div, writer);
 
@@ -33,25 +32,25 @@ class InsertCustomCardCommand extends Command {
 
     // 在组件挂载后渲染 React 组件，并传递参数
     setTimeout(() => {
-      const container = document.querySelector(".custom-card-component");
+      const container = document.querySelector(".custom-react-component");
       if (container) {
         const root = ReactDOM.createRoot(container);
-        root.render(<CustomCardComponent title={title} />);
+        root.render(<CustomReactComponent message={message} />);
       }
     }, 0);
 
     // 更新模型以保持同步
     model.change((writer) => {
-      const element = writer.createElement("customCard", { title });
+      const element = writer.createElement("customComponent", { message });
       writer.insert(element, model.document.selection.getFirstPosition());
     });
   }
 }
 
 // 自定义插件类
-export default class CustomCardPlugin extends Plugin {
+export default class CustomPlugin extends Plugin {
   static get pluginName() {
-    return "CustomCardPlugin";
+    return "CustomPlugin";
   }
 
   init() {
@@ -59,8 +58,8 @@ export default class CustomCardPlugin extends Plugin {
 
     // 注册自定义命令
     editor.commands.add(
-      "insertCustomCard",
-      new InsertCustomCardCommand(editor)
+      "insertCustomComponent",
+      new InsertCustomComponentCommand(editor)
     );
 
     // 创建按钮并绑定命令
@@ -68,17 +67,14 @@ export default class CustomCardPlugin extends Plugin {
       const buttonView = new ButtonView(locale);
 
       buttonView.set({
-        label: "插入自定义卡片",
+        label: "插入自定义组件",
         withText: true,
         tooltip: true,
       });
 
       // 绑定按钮点击事件到命令执行，并传递参数
       buttonView.on("execute", () => {
-        const title = prompt("请输入卡片标题");
-        if (title) {
-          editor.execute("insertCustomCard", { title });
-        }
+        editor.execute("insertCustomComponent", { message: 11 });
       });
 
       return buttonView;
@@ -86,10 +82,10 @@ export default class CustomCardPlugin extends Plugin {
 
     // 添加模型到视图的转换逻辑
     editor.conversion.for("editingDowncast").elementToElement({
-      model: "customCard",
+      model: "customComponent",
       view: (modelElement, { writer: viewWriter }) => {
         const div = viewWriter.createContainerElement("div", {
-          class: "custom-card-component",
+          class: "custom-react-component",
         });
         return toWidget(div, viewWriter);
       },
@@ -97,16 +93,16 @@ export default class CustomCardPlugin extends Plugin {
 
     // 添加数据向下转换逻辑（用于保存数据）
     editor.conversion.for("dataDowncast").elementToElement({
-      model: "customCard",
+      model: "customComponent",
       view: (modelElement, { writer: viewWriter }) => {
-        const title = modelElement.getAttribute("title");
+        const message = modelElement.getAttribute("message");
         const div = viewWriter.createContainerElement("div", {
-          class: "custom-card-component",
+          class: "custom-react-component",
         });
-        const h3 = viewWriter.createContainerElement("h3");
-        const text = viewWriter.createText(title);
-        viewWriter.insert(viewWriter.createPositionAt(h3, 0), text);
-        viewWriter.insert(viewWriter.createPositionAt(div, 0), h3);
+        const p = viewWriter.createContainerElement("p");
+        const text = viewWriter.createText(message);
+        viewWriter.insert(viewWriter.createPositionAt(p, 0), text);
+        viewWriter.insert(viewWriter.createPositionAt(div, 0), p);
         return div;
       },
     });
@@ -115,20 +111,20 @@ export default class CustomCardPlugin extends Plugin {
     editor.conversion.for("upcast").elementToElement({
       view: {
         name: "div",
-        classes: "custom-card-component",
+        classes: "custom-react-component",
       },
       model: (viewElement, { writer: modelWriter }) => {
-        const h3 = viewElement.getChild(0);
-        const title = h3.getChild(0).data;
-        return modelWriter.createElement("customCard", { title });
+        const p = viewElement.getChild(0);
+        const message = p.getChild(0).data;
+        return modelWriter.createElement("customComponent", { message });
       },
     });
 
-    // 配置选择器，以便在编辑器中正确处理自定义卡片元素
+    // 配置选择器，以便在编辑器中正确处理自定义组件元素
     editor.editing.mapper.on(
       "viewToModelPosition",
       viewToModelPositionOutsideModelElement(editor.model, (viewElement) =>
-        viewElement.hasClass("custom-card-component")
+        viewElement.hasClass("custom-react-component")
       )
     );
   }

@@ -21,7 +21,7 @@ const VideoUpload: React.FC<VideoUploadProps> = (props) => {
       const { videoFileId: tempVideoFileId } = values;
       setUploadUrlOpen(false);
       form.resetFields();
-      editor!.execute("insertCustomCard", { src: tempVideoFileId });
+      editor!.execute("insertCustomComponent", { message: tempVideoFileId });
     });
   };
 

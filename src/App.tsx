@@ -129,6 +129,8 @@ const editorConfig = {
     // ImageUploadPlugin,
     CustomVideoPlugin,
   ],
+
+  toolbar: ["customCardButton"],
   initialData: "",
   image: {
     styles: ["alignCenter", "alignLeft", "alignRight"],
