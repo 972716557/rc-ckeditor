@@ -81,18 +81,35 @@ export default class CustomPlugin extends Plugin {
       return buttonView;
     });
 
-    // 添加模型到视图的转换逻辑
+    // 用于在编辑器中渲染为html
     editor.conversion.for("editingDowncast").elementToElement({
       model: "customComponent",
-      view: (modelElement, { writer: viewWriter }) => {
-        const div = viewWriter.createContainerElement("div", {
-          class: "custom-react-component",
-        });
-        return toWidget(div, viewWriter);
+      view: (modelElement, { writer }) => {
+        const label = "插入视频";
+        const viewWrapper = writer.createContainerElement(
+          "div",
+          null,
+          writer.createUIElement("div", null, function (domDocument) {
+            const domElement = this.toDomElement(domDocument);
+            domElement.innerHTML = `<div class='custom-react-component'></div>`;
+
+            return domElement;
+          })
+        );
+        // 在组件挂载后渲染 React 组件，并传递参数
+        setTimeout(() => {
+          const container = document.querySelector(".custom-react-component");
+          if (container) {
+            const root = ReactDOM.createRoot(container);
+            root.render(<CustomReactComponent title={"11"} />);
+          }
+        }, 0);
+
+        return toWidget(viewWrapper, writer, { label });
       },
     });
 
-    // 添加数据向下转换逻辑（用于保存数据）
+    // 用于导出为富文本
     editor.conversion.for("dataDowncast").elementToElement({
       model: "customComponent",
       view: (modelElement, { writer: viewWriter }) => {
@@ -108,7 +125,7 @@ export default class CustomPlugin extends Plugin {
       },
     });
 
-    // 添加向上转换逻辑（用于加载数据）
+    // 文本渲染dom
     editor.conversion.for("upcast").elementToElement({
       view: {
         name: "div",
