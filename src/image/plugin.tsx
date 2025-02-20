@@ -72,6 +72,15 @@ export default class CustomImage extends Plugin {
 
   init() {
     const editor = this.editor;
+    const id = uniqueId();
+
+    const className = `custom-react-image-${id}`;
+
+    // 正确模型注册示例,避免拖拽的时候dom消失
+    editor.model.schema.register("customImage", {
+      inheritAllFrom: "$block",
+      isObject: true, // 关键！声明为不可拆分对象
+    });
 
     // 注册自定义命令
     editor.commands.add("insetCustomImg", new InsetCustomImgCommand(editor));
@@ -98,19 +107,17 @@ export default class CustomImage extends Plugin {
     editor.conversion.for("editingDowncast").elementToElement({
       model: "customImage",
       view: (modelElement, { writer }) => {
-        const id = uniqueId();
-        const classNameId = `custom-react-component-${id}`;
-        console.log(classNameId, "classNameId");
+        console.log(className, "className");
         const viewWrapper = writer.createContainerElement(
           "div",
           null,
           writer.createUIElement("div", {
-            class: classNameId,
+            class: className,
           })
         );
         // 在组件挂载后渲染 React 组件，并传递参数
         setTimeout(() => {
-          const container = document.querySelector(`.${classNameId}`);
+          const container = document.querySelector(`.${className}`);
           if (container) {
             const root = ReactDOM.createRoot(container);
             root.render(
@@ -126,12 +133,26 @@ export default class CustomImage extends Plugin {
     // 用于导出为富文本
     editor.conversion.for("dataDowncast").elementToElement({
       model: "customImage",
-      view: (modelElement, { writer: viewWriter }) => {
-        const div = viewWriter.createContainerElement("div", {
-          class: "custom-react-component",
+      view: (modelElement, { writer }) => {
+        const viewWrapper = writer.createContainerElement(
+          "div",
+          null,
+          writer.createUIElement("div", {
+            class: className,
+          })
+        );
+        // 在组件挂载后渲染 React 组件，并传递参数
+        setTimeout(() => {
+          const container = document.querySelector(`.${className}`);
+          if (container) {
+            const root = ReactDOM.createRoot(container);
+            root.render(
+              <Image src="https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png" />
+            );
+          }
         });
 
-        return div;
+        return toWidget(viewWrapper, writer);
       },
     });
 
@@ -139,10 +160,10 @@ export default class CustomImage extends Plugin {
     editor.conversion.for("upcast").elementToElement({
       view: {
         name: "div",
-        classes: "custom-react-component",
+        classes: className,
       },
       model: (viewElement, { writer: modelWriter }) => {
-        return modelWriter.createElement("customImage", { src: "11" });
+        return modelWriter.createElement("customImage");
       },
     });
 
@@ -150,7 +171,7 @@ export default class CustomImage extends Plugin {
     editor.editing.mapper.on(
       "viewToModelPosition",
       viewToModelPositionOutsideModelElement(editor.model, (viewElement) =>
-        viewElement.hasClass("custom-react-component")
+        viewElement.hasClass(className)
       )
     );
   }
