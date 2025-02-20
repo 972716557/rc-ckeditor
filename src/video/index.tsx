@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import { Modal, Input, Form } from "antd";
 
 import { VideoUploadProps } from "./interface";
-import "./index.less";
 
 const prefixClsCommon = "community-rich-editor";
-const MAX_FILE_VOLUME = 500;
 
 const VideoUpload: React.FC<VideoUploadProps> = (props) => {
   const { editor } = props;

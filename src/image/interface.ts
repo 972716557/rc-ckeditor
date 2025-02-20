@@ -1,5 +1,4 @@
-import { EditorState } from 'draft-js';
-import { RcFile as OriRcFile } from 'rc-upload/lib/interface';
+import { RcFile as OriRcFile } from "rc-upload/lib/interface";
 
 export interface ImageProps {
   editorState: EditorState;
@@ -15,7 +14,12 @@ export interface ImageProps {
 export interface RcFile extends OriRcFile {
   readonly lastModifiedDate: Date;
 }
-export declare type UploadFileStatus = 'error' | 'success' | 'done' | 'uploading' | 'removed';
+export declare type UploadFileStatus =
+  | "error"
+  | "success"
+  | "done"
+  | "uploading"
+  | "removed";
 export interface HttpRequestHeader {
   [key: string]: string;
 }

@@ -55,7 +55,7 @@ import translations from "ckeditor5/translations/zh-cn.js";
 import ImageButton from "./image";
 import VideoUpload from "./video";
 import CustomVideoPlugin from "./video/video-plugin/index";
-import ImageUploadPlugin from "./image/image-plugin";
+import ImageUploadPlugin from "./image/plugin";
 import "tcplayer.js/dist/tcplayer.min.css";
 import Toolbar from "./toolbar";
 import LinkButton from "./link";
@@ -65,7 +65,6 @@ import {
   Redo,
   Clear,
   Code as CodeIcon,
-  Divider,
   Del,
   Ul,
   Ol,
@@ -77,6 +76,7 @@ import FontSize from "./font-size";
 import { DEFAULT_COLOR, DEFAULT_FONT_SIZE } from "./constant";
 import Title from "./title";
 import "ckeditor5/ckeditor5.css";
+import "./index.less";
 // 工具栏功能项配置
 const editorConfig = {
   plugins: [
@@ -126,7 +126,7 @@ const editorConfig = {
     TextTransformation,
     Underline,
     WordCount,
-    // ImageUploadPlugin,
+    ImageUploadPlugin,
     CustomVideoPlugin,
   ],
 
@@ -316,8 +316,8 @@ export default function App() {
       />
       <LinkButton editor={editor} text={selectedText} />
       <Color editor={editor} color={color} />
-      {/* <ImageButton editor={editor} />
-       */}
+      <ImageButton editor={editor} />
+
       <VideoUpload editor={editor} />
       <CKEditor
         editor={ClassicEditor}
