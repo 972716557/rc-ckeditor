@@ -73,6 +73,12 @@ export default class CustomPlugin extends Plugin {
   init() {
     const editor = this.editor;
 
+    // 正确模型注册示例,避免拖拽的时候dom消失
+    editor.model.schema.register("customComponent", {
+      inheritAllFrom: "$block",
+      isObject: true, // 关键！声明为不可拆分对象
+    });
+
     // 注册自定义命令
     editor.commands.add(
       "insertCustomComponent",
