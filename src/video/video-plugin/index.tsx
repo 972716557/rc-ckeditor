@@ -8,7 +8,7 @@ import {
   viewToModelPositionOutsideModelElement,
 } from "ckeditor5";
 import ReactDOM from "react-dom/client";
-import CustomReactComponent from "./CustomReactComponent";
+import CustomReactComponent from "./video";
 import { uniqueId } from "lodash";
 
 /*
