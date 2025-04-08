@@ -1,0 +1,76 @@
+@import '~@/styles/variables/index.less';
+
+.e-space-editor-video {
+  &__content {
+    position: relative;
+    width: 100%;
+    height: 460px;
+    .ant-spin-spinning {
+      background-color: @fill-3;
+    }
+    .ant-spin.ant-spin-spinning {
+      height: 460px;
+      max-height: 460px;
+    }
+    .vjs-poster {
+      display: none;
+    }
+    .vjs-button-icon {
+      width: 64px !important;
+      height: 64px !important;
+      background-color: fade(@text-5, 60%);
+      border-radius: 50%;
+      > svg {
+        :first-child {
+          display: none;
+        }
+        path {
+          transform: translate(0, 0) !important;
+          fill: @fill-1 !important;
+        }
+      }
+    }
+    .vjs-close-button {
+      display: none !important;
+    }
+
+    &:hover {
+      .e-space-editor-video__delete {
+        display: flex;
+      }
+    }
+    .video-js {
+      width: 100%;
+      height: 460px;
+      &.vjs-fullscreen {
+        max-height: fit-content;
+        .video-js {
+          max-height: fit-content;
+        }
+      }
+    }
+
+    .tcp-right-click-popup-menu {
+      display: none !important;
+    }
+  }
+  &__delete {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 10;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    color: @text-3;
+    background-color: @fill-1;
+    border-radius: @border-radius-lg;
+    cursor: pointer;
+    opacity: 0.6;
+    .iconfont {
+      font-size: @font-size-6;
+    }
+  }
+}
