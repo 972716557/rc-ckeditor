@@ -1,0 +1,33 @@
+@import '~@/styles/variables/index.less';
+@import '~@/styles/index.less';
+
+.editor-video-upload {
+  &-upload-icon {
+    font-size: 18px !important;
+  }
+  &-button {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    .iconfont {
+      margin-right: @margin-xss;
+    }
+    &:hover {
+      color: @primary-6;
+    }
+  }
+  &-description {
+    color: @text-3;
+    .setFont(1);
+  }
+  &-upload {
+    padding: @padding-lg 0;
+    text-align: center;
+    .ant-btn-primary {
+      display: inline-flex;
+    }
+    .iconfont {
+      margin-right: @margin-xss;
+    }
+  }
+}
