@@ -1,0 +1,23 @@
+.color {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  vertical-align: bottom;
+}
+
+.block {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+}
+
+.popover {
+  :global {
+    .sketch-picker {
+      width: 250px !important;
+    }
+    .ant-popover-inner-content {
+      padding: 0;
+    }
+  }
+}

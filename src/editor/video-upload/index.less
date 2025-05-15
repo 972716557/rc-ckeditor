@@ -1,0 +1,30 @@
+@import '~@/styles/variables/index.less';
+@import '~@/styles/index.less';
+
+.editor-video-upload {
+  &__button {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    .iconfont {
+      margin-right: @margin-xss;
+    }
+    &:hover {
+      color: @primary-6;
+    }
+  }
+  &__description {
+    color: @text-3;
+    .setFont(1);
+  }
+  &__upload {
+    padding: @padding-lg 0;
+    text-align: center;
+    .ant-btn-primary {
+      display: inline-flex;
+    }
+    .iconfont {
+      margin-right: @margin-xss;
+    }
+  }
+}
